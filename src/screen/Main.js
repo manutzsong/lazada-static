@@ -85,7 +85,7 @@ export default class App extends React.Component {
 	};
 
 	getData = async () => {
-		let result = await axios.get("https://manutzsong-laz.ddns.net/node-sv");
+		let result = await axios.post("https://manutzsong-laz.ddns.net/node-sv/laz_product");
 
 		let resultTransaction = await axios.post("https://manutzsong-laz.ddns.net/node-sv/finance", {
 			startdate: this.state.startDateUserSelect,

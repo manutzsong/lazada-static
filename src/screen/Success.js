@@ -28,6 +28,11 @@ export default class App extends React.Component {
           };
     }
     componentDidMount() {
+      axios.post("https://manutzsong-laz.ddns.net/node-sv/laz_product").then(res => {
+
+      }).catch(err =>{
+        console.log(err);
+      });
       if (sessionStorage.getItem("accesstoken") && sessionStorage.getItem("userid")) {
         this.loopThroughProducts();
       }
@@ -81,7 +86,7 @@ export default class App extends React.Component {
         productSameAsDB.push(pushThis);
       });
 
-      let productsFromDB = await axios.get("https://manutzsong-laz.ddns.net/node-sv");
+      let productsFromDB = await axios.post("https://manutzsong-laz.ddns.net/node-sv/laz_product");
       console.log(productsFromDB.data);
       // //LAZ_SKU from DB
       let LAZ_SKU = [];
@@ -149,7 +154,7 @@ export default class App extends React.Component {
       }).then( res => {
         console.log(res.data);
         // this.props.history.push('/app');
-        // window.location.replace("https://lazada-react-client.herokuapp.com/");
+        window.location.replace("https://manutzsong.github.io/lazada-static/");
       });
       
     }

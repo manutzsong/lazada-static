@@ -38,7 +38,7 @@ export default class App extends React.Component {
 
     checkCode = async() => {
       await this.setState({isLoading : "Checking your authorization"});
-      let url = "https://lazada-song-ws.herokuapp.com/getaccess";
+      let url = "https://manutzsong-laz.ddns.net/python-sv/getaccess";
       
       const {code} = queryString.parse(this.props.location.search);
       console.log(code);
@@ -61,7 +61,7 @@ export default class App extends React.Component {
 
     loopThroughProducts = async() => {
       await this.setState({isLoading : "Get product list"});
-      let url = `https://lazada-song-ws.herokuapp.com/getproducts?accesstoken=${this.state.accessToken}`; 
+      let url = `https://manutzsong-laz.ddns.net/python-sv/getproducts?accesstoken=${this.state.accessToken}`; 
       let products = await axios.get(url);
       console.log(products.data.data.products);
       products = products.data.data.products.map(x => x.skus);
@@ -81,7 +81,7 @@ export default class App extends React.Component {
         productSameAsDB.push(pushThis);
       });
 
-      let productsFromDB = await axios.get("http://localhost:3002");
+      let productsFromDB = await axios.get("https://manutzsong-laz.ddns.net/node-sv");
       // //LAZ_SKU from DB
       let LAZ_SKU = [];
       let LAZ_Products = productsFromDB.data;
@@ -143,7 +143,7 @@ export default class App extends React.Component {
       // console.log(this.state.products);
       axios({
         method: 'post',
-        url: 'http://localhost:3002/insert',
+        url: 'https://manutzsong-laz.ddns.net/node-sv/insert',
         data: { products : this.state.products, userid : this.state.userId }
       }).then( res => {
         console.log(res.data);

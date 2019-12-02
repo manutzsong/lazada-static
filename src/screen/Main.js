@@ -35,7 +35,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Link from "@material-ui/core/Link";
 
 // const urlAPI = "http://lazada-song-ws.herokuapp.com";
-const urlAPI = "http://localhost:3002";
+const urlAPI = "https://manutzsong-laz.ddns.net/node-sv";
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -85,9 +85,9 @@ export default class App extends React.Component {
 	};
 
 	getData = async () => {
-		let result = await axios.get("http://localhost:3002");
+		let result = await axios.get("https://manutzsong-laz.ddns.net/node-sv");
 
-		let resultTransaction = await axios.post("http://localhost:3002/finance", {
+		let resultTransaction = await axios.post("https://manutzsong-laz.ddns.net/node-sv/finance", {
 			startdate: this.state.startDateUserSelect,
 			enddate: this.state.endDateUserSelect,
 			status: this.state.statusOrder,

@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/lazada-static/precache-manifest.31e7f201aeeb28fea45cc32ece79dd6c.js"
+  "/lazada-static/precache-manifest.31b73d2305e2cf45601990ed0b9c3a6f.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/lazada-static/static/css/main.e97e6dc7.chunk.css",
-    "main.js": "/lazada-static/static/js/main.67e684b0.chunk.js",
-    "main.js.map": "/lazada-static/static/js/main.67e684b0.chunk.js.map",
+    "main.js": "/lazada-static/static/js/main.4ac98144.chunk.js",
+    "main.js.map": "/lazada-static/static/js/main.4ac98144.chunk.js.map",
     "runtime-main.js": "/lazada-static/static/js/runtime-main.92e213f7.js",
     "runtime-main.js.map": "/lazada-static/static/js/runtime-main.92e213f7.js.map",
     "static/css/2.833dd627.chunk.css": "/lazada-static/static/css/2.833dd627.chunk.css",
-    "static/js/2.b4fc3d13.chunk.js": "/lazada-static/static/js/2.b4fc3d13.chunk.js",
-    "static/js/2.b4fc3d13.chunk.js.map": "/lazada-static/static/js/2.b4fc3d13.chunk.js.map",
+    "static/js/2.eddb233f.chunk.js": "/lazada-static/static/js/2.eddb233f.chunk.js",
+    "static/js/2.eddb233f.chunk.js.map": "/lazada-static/static/js/2.eddb233f.chunk.js.map",
     "index.html": "/lazada-static/index.html",
-    "precache-manifest.31e7f201aeeb28fea45cc32ece79dd6c.js": "/lazada-static/precache-manifest.31e7f201aeeb28fea45cc32ece79dd6c.js",
+    "precache-manifest.31b73d2305e2cf45601990ed0b9c3a6f.js": "/lazada-static/precache-manifest.31b73d2305e2cf45601990ed0b9c3a6f.js",
     "service-worker.js": "/lazada-static/service-worker.js",
     "static/css/2.833dd627.chunk.css.map": "/lazada-static/static/css/2.833dd627.chunk.css.map",
     "static/css/main.e97e6dc7.chunk.css.map": "/lazada-static/static/css/main.e97e6dc7.chunk.css.map"
@@ -17,8 +17,8 @@
   "entrypoints": [
     "static/js/runtime-main.92e213f7.js",
     "static/css/2.833dd627.chunk.css",
-    "static/js/2.b4fc3d13.chunk.js",
+    "static/js/2.eddb233f.chunk.js",
     "static/css/main.e97e6dc7.chunk.css",
-    "static/js/main.67e684b0.chunk.js"
+    "static/js/main.4ac98144.chunk.js"
   ]
 }

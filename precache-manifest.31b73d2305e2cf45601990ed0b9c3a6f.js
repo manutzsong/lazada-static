@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d5cdcad217f4da59a61eec47edb60b33",
+    "revision": "b490de7716177e4f647ed4a5ea7406b2",
     "url": "/lazada-static/index.html"
   },
   {
-    "revision": "3834514bc5afd71de3c9",
+    "revision": "ece463f7a281cba1641d",
     "url": "/lazada-static/static/css/2.833dd627.chunk.css"
   },
   {
-    "revision": "794d80450d97393b5843",
+    "revision": "0a1cda950bc00d57248e",
     "url": "/lazada-static/static/css/main.e97e6dc7.chunk.css"
   },
   {
-    "revision": "3834514bc5afd71de3c9",
-    "url": "/lazada-static/static/js/2.b4fc3d13.chunk.js"
+    "revision": "ece463f7a281cba1641d",
+    "url": "/lazada-static/static/js/2.eddb233f.chunk.js"
   },
   {
-    "revision": "794d80450d97393b5843",
-    "url": "/lazada-static/static/js/main.67e684b0.chunk.js"
+    "revision": "0a1cda950bc00d57248e",
+    "url": "/lazada-static/static/js/main.4ac98144.chunk.js"
   },
   {
     "revision": "dbb714cd2ca1eb88b44e",

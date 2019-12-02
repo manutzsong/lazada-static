@@ -20,19 +20,14 @@ export default class App extends React.Component {
               { name: 'Current Price', key: 'product_price', fronzen: true, width: 150, resizable: true},
               { name: 'Cost', key: 'product_cost', width: 150, editable: true, resizable: true},
             ],
-            accessToken : sessionStorage.getItem("accesstoken") || "",
-            userId : sessionStorage.getItem("userid") || "",
+            accessToken : sessionStorage.getItem("accesstoken"),
+            userId : sessionStorage.getItem("userid"),
             isLoading : true,
             totalDB : 0,
             totalLAZ : 0
           };
     }
     componentDidMount() {
-      axios.post("https://manutzsong-laz.ddns.net/node-sv/laz_product").then(res => {
-
-      }).catch(err =>{
-        console.log(err);
-      });
       if (sessionStorage.getItem("accesstoken") && sessionStorage.getItem("userid")) {
         this.loopThroughProducts();
       }
@@ -150,7 +145,7 @@ export default class App extends React.Component {
       axios({
         method: 'post',
         url: 'https://manutzsong-laz.ddns.net/node-sv/insert',
-        data: { products : this.state.products, userid : this.state.userId }
+        data: { products : this.state.products, userid : this.state.userId || sessionStorage.getItem("userid")}
       }).then( res => {
         console.log(res.data);
         // this.props.history.push('/app');

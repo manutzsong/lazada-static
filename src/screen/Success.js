@@ -82,6 +82,7 @@ export default class App extends React.Component {
       });
 
       let productsFromDB = await axios.get("https://manutzsong-laz.ddns.net/node-sv");
+      console.log(productsFromDB.data);
       // //LAZ_SKU from DB
       let LAZ_SKU = [];
       let LAZ_Products = productsFromDB.data;

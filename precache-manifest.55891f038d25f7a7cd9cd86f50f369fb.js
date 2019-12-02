@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e90e9d27e243a8474e75be88206550f9",
+    "revision": "7b66575e6a5cf96ddf7e9c9a14557701",
     "url": "/lazada-static/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lazada-static/static/css/2.833dd627.chunk.css"
   },
   {
-    "revision": "294e1c0848f5c34b338d",
+    "revision": "9ac06a19206c2f563d44",
     "url": "/lazada-static/static/css/main.e97e6dc7.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/lazada-static/static/js/2.eddb233f.chunk.js"
   },
   {
-    "revision": "294e1c0848f5c34b338d",
-    "url": "/lazada-static/static/js/main.0f867e50.chunk.js"
+    "revision": "9ac06a19206c2f563d44",
+    "url": "/lazada-static/static/js/main.7f483f95.chunk.js"
   },
   {
     "revision": "dbb714cd2ca1eb88b44e",

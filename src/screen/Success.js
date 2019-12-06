@@ -70,13 +70,15 @@ export default class App extends React.Component {
       console.log(products);
       let productSameAsDB = [];
       products.forEach(x => {
+        console.log(x.color_family);
         let pushThis = {
           lazada_sku : x.ShopSku,
           seller_sku : x.SellerSku,
           product_cost : 0,
           product_url : x.Url,
           product_img : x.Images[0],
-          product_price : x.special_price ? x.special_price : x.price
+          product_price : x.special_price ? x.special_price : x.price,
+          product_family :  `${x.color_family ? x.color_family : ""} ${x.size ? x.size : ""}`
         }
         productSameAsDB.push(pushThis);
       });

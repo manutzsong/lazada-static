@@ -1,0 +1,450 @@
+import React from "react";
+
+import axios from "axios";
+import moment from "moment-timezone";
+
+import "date-fns";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import retryInterceptor from "axios-retry-interceptor";
+import "../App.css";
+
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Button from "@material-ui/core/Button";
+
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+	MuiPickersUtilsProvider,
+	KeyboardDatePicker
+} from "@material-ui/pickers";
+
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
+import Divider from "@material-ui/core/Divider";
+
+import LineChart from "../component/Chart";
+
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+
+import Link from "@material-ui/core/Link";
+
+// const urlAPI = "http://lazada-song-ws.herokuapp.com";
+const urlAPI = "https://manutzsong-laz.ddns.net/node-sv";
+
+export default class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			startDateUserSelect: moment()
+				.add(-7, "days")
+				.startOf("day")
+				.format(),
+			endDateUserSelect: moment()
+				.endOf("day")
+				.format(),
+			statusOrder: "delivered",
+			inventory: [],
+			inventoryCount: 0,
+			saveOrders: [],
+			saveOrderItems: [],
+			saveFinanceOrder: [],
+
+			isLoading: true,
+			accessToken: sessionStorage.getItem("accesstoken"),
+			left: false,
+
+			resultTransactionArray: null,
+			orderLength:0,
+		};
+	}
+	componentDidMount() {
+		this.getData();
+	}
+
+	sortObject = (obj, whatKey) => {
+		var arr = [];
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(prop)) {
+				arr.push({
+					key: prop,
+					value: obj[prop][whatKey],
+					product: obj[prop].product
+				});
+			}
+		}
+		arr.sort(function(a, b) {
+			return b.value - a.value;
+		});
+		//arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
+		return arr; // returns array
+	};
+
+	getData = async () => {
+
+		let resultTransaction = await axios.post("http://localhost:3002/transactions", {
+			startdate: this.state.startDateUserSelect,
+			enddate: this.state.endDateUserSelect,
+			status: this.state.statusOrder,
+			accesstoken: this.state.accessToken
+		});
+		let orderLength = Object.keys(resultTransaction.data.orderNo).length;
+		// resultTransaction = resultTransaction.data.orderNo;
+		console.log(resultTransaction);
+      let resultTransactionArray = {
+        created_at: [],
+        orderId: [],
+        totalRevenue: [],
+        totalPaymentFee: [],
+        totalPaidToSeller: [],
+        totalProduct: [],
+        totalProfit: [],
+        totalPromotionFlexi: [],
+        totalPromotionVoucher: [],
+        totalShippingByCust: [],
+        totalShippingCharge: [],
+        totalShippingExceed: [],
+		totalCost: [],
+		// product_cost	0
+		// profit	150.48999999999998
+		// shippingFeePaidByCustomer	45
+		// paymentFee	-3.36
+		// itemPriceCredit	157
+		// promotionalFlexi	0
+		// shippingFeeChargedByLAZ	-48.15
+		// promotionalVoucher	0
+      };
+
+      for (let z in resultTransaction.data.orderNo) {
+		let x = resultTransaction.data.orderNo[z];
+        resultTransactionArray.created_at.push(x.items[0].order_info.created_at);
+		resultTransactionArray.orderId.push(x.items[0].order_no);
+        resultTransactionArray.totalPaymentFee.push(x.paymentFee);
+        resultTransactionArray.totalRevenue.push(x.itemPriceCredit);
+        resultTransactionArray.totalProfit.push(x.profit);
+        resultTransactionArray.totalPromotionFlexi.push(x.promotionalFlexi);
+        resultTransactionArray.totalPromotionVoucher.push(x.promotionalVoucher);
+        resultTransactionArray.totalShippingByCust.push(x.shippingFeePaidByCustomer);
+		resultTransactionArray.totalShippingCharge.push(x.shippingFeeChargedByLAZ);
+		resultTransactionArray.totalCost.push(x.product_cost);
+		
+      }
+    //   console.log("Total BeforeDeduct" ,resultTransactionArray.totalBeforeDeduct.reduce((a, b) => a + b, 0));
+    //   console.log("Total Fee" ,resultTransactionArray.totalFeeName.reduce((a, b) => a + b, 0));
+    //   console.log("Total PaidToSeller" ,resultTransactionArray.totalPaidToSeller.reduce((a, b) => a + b, 0));
+    //   console.log("Total ProfitToSeller" ,resultTransactionArray.totalProfitToSeller.reduce((a, b) => a + b, 0));
+    //   console.log("Total Flexi" ,resultTransactionArray.totalPromotionFlexi.reduce((a, b) => a + b, 0));
+    //   console.log("Total Voucher" ,resultTransactionArray.totalPromotionVoucher.reduce((a, b) => a + b, 0));
+    //   console.log("Total ByCust" ,resultTransactionArray.totalShippingByCust.reduce((a, b) => a + b, 0));
+    //   console.log("Total Charge LAZ" ,resultTransactionArray.totalShippingCharge.reduce((a, b) => a + b, 0));
+    //   console.log("Total Cost" ,resultTransactionArray.totalCost.reduce((a, b) => a + b, 0));
+
+      // wideDeduct = resultTransactionArray.totalBeforeDeduct.reduce((a, b) => a + b, 0);
+      // wideFee = resultTransactionArray.totalFeeName.reduce((a, b) => a + b, 0);
+      // widePaidToSeller = resultTransactionArray.totalPaidToSeller.reduce((a, b) => a + b, 0);
+      // wideProfitToSeller = resultTransactionArray.totalProfitToSeller.reduce((a, b) => a + b, 0);
+      // wideFlexi = resultTransactionArray.totalPromotionFlexi.reduce((a, b) => a + b, 0);
+      // wideVoucher = resultTransactionArray.totalPromotionVoucher.reduce((a, b) => a + b, 0);
+      // wideShippingCust = resultTransactionArray.totalShippingByCust.reduce((a, b) => a + b, 0);
+      // wideShippingCharge = resultTransactionArray.totalShippingCharge.reduce((a, b) => a + b, 0);
+      // wideCost = resultTransactionArray.totalCost.reduce((a, b) => a + b, 0);
+
+    //   let _resultWide = {
+    //     wideRevenue : resultTransactionArray.totalRevenue.reduce((a, b) => a + b, 0),
+    //     wideFee : resultTransactionArray.totalPaymentFee.reduce((a, b) => a + b, 0),
+    //     wideProfit : resultTransactionArray.totalProfit.reduce((a, b) => a + b, 0),
+    //     wideFlexi : resultTransactionArray.totalPromotionFlexi.reduce((a, b) => a + b, 0),
+    //     wideVoucher : resultTransactionArray.totalPromotionVoucher.reduce((a, b) => a + b, 0),
+    //     wideShippingCust : resultTransactionArray.totalShippingByCust.reduce((a, b) => a + b, 0),
+    //     wideShippingCharge : resultTransactionArray.totalShippingCharge.reduce((a, b) => a + b, 0),
+    //     wideCost :resultTransactionArray.totalCost.reduce((a, b) => a + b, 0)
+    //   };
+
+      await this.setState({
+        resultTransactionArray: resultTransactionArray,
+        resultTransaction: resultTransaction,
+		resultWide : resultTransaction.data.wideFinancial,
+		orderLength : orderLength,
+        // inventory: flattenTransactionProduct,
+        // inventoryCount: counts,
+        isLoading: false
+      });
+    
+
+
+  };
+  
+  retryBlock = async() => {
+    console.log("RETRY BLOCK");
+    await this.setState({isLoading : "No available data. Retrying with DELIVERED order within 1 Week period."});
+      setTimeout( async() => { 
+        await this.setState(
+          {
+            startDateUserSelect: moment().add(-7, "days").startOf("day").format(),
+            endDateUserSelect: moment().endOf("day").format(),
+            statusOrder: "delivered",
+          }
+        );
+        this.getData();
+    }, 3000);
+  }
+
+	toggleDrawer = (side, open) => event => {
+		console.log(side, open);
+		if (
+			event &&
+			event.type === "keydown" &&
+			(event.key === "Tab" || event.key === "Shift")
+		) {
+			return;
+		}
+
+		this.setState({ left: open });
+	};
+
+	sideList = side => (
+		<div
+			role="presentation"
+			// onClick={this.toggleDrawer(side, false)}
+			onKeyDown={this.toggleDrawer(side, false)}
+			className="p-4"
+		>
+			<div className="d-flex flex-column justify-content-center align-items-center">
+				<div className="d-flex justify-content-around flex-column">
+					<MuiPickersUtilsProvider utils={DateFnsUtils}>
+						<KeyboardDatePicker
+							name="startDate"
+							margin="normal"
+							id="date-picker-dialog"
+							label="Start Date (Before Date)"
+							format="MM/dd/yyyy"
+							value={this.state.startDateUserSelect}
+							onChange={this.handleStartDate}
+							KeyboardButtonProps={{
+								"aria-label": "change date"
+							}}
+						/>
+
+						<KeyboardDatePicker
+							name="startDate"
+							margin="normal"
+							id="date-picker-dialog"
+							label="End Date (After Date)"
+							format="MM/dd/yyyy"
+							value={this.state.endDateUserSelect}
+							onChange={this.handleEndDate}
+							KeyboardButtonProps={{
+								"aria-label": "change date"
+							}}
+						/>
+					</MuiPickersUtilsProvider>
+				</div>
+				<Divider />
+				<div className="align-self-start my-5">
+					<FormLabel component="legend">Status</FormLabel>
+					<RadioGroup
+						aria-label="statusSelected"
+						name="statusSelected"
+						value={this.state.statusOrder}
+						onChange={e => this.setState({ statusOrder: e.target.value })}
+					>
+						<FormControlLabel
+							value="delivered"
+							control={<Radio />}
+							label="Delivered"
+						/>
+						<FormControlLabel
+							value="shipped"
+							control={<Radio />}
+							label="Shipped"
+						/>
+						<FormControlLabel
+							value="canceled"
+							control={<Radio />}
+							label="Canceled"
+						/>
+						<FormControlLabel
+							value="ready_to_ship"
+							control={<Radio />}
+							label="Ready to Ship"
+						/>
+					</RadioGroup>
+				</div>
+				<Button
+					variant="contained"
+					color="primary"
+					fullWidth={true}
+					onClick={() => {
+						this.getData();
+						this.toggleDrawer("left", false);
+					}}
+				>
+					Submit
+				</Button>
+			</div>
+		</div>
+	);
+
+	handleInputChange = event => {
+		console.log(event);
+		const target = event.target;
+		const value = target.type === "checkbox" ? target.checked : target.value;
+		const name = target.name;
+
+		console.log(value);
+
+		this.setState({
+			[name]: value
+		});
+	};
+
+	handleStartDate = e => {
+		let value = moment(e)
+			.startOf("day")
+			.format();
+		this.setState({ startDateUserSelect: value });
+		console.log(value);
+	};
+	handleEndDate = e => {
+		let value = moment(e)
+			.endOf("day")
+			.format();
+		this.setState({ endDateUserSelect: value });
+		console.log(value);
+	};
+
+	render() {
+		if (this.state.isLoading) {
+			return (
+				<div className="container d-flex vh-100 justify-content-center">
+					<div className="align-self-center align-items-center d-flex">
+						<div>
+							<CircularProgress />
+						</div>
+						<div className="px-3">
+							<h4>{this.state.isLoading}</h4>
+						</div>
+					</div>
+				</div>
+			);
+		}
+		if (this.state.isLoading) {
+			return <div>Loading</div>;
+		}
+		return (
+			<div className="container">
+				<Button onClick={this.toggleDrawer("left", true)}>Open Left</Button>
+
+				<SwipeableDrawer
+					open={this.state.left}
+					onClose={this.toggleDrawer("left", false)}
+					onOpen={this.toggleDrawer("left", true)}
+				>
+					{this.sideList("left")}
+				</SwipeableDrawer>
+
+				<div className="">
+					<h2>Financial Statistic</h2>
+					<div className="row d-flex justify-content-around">
+						<List className="col-12 col-md-4">
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Revenue | ยอดขาย"
+									secondary={
+										this.state.resultWide.itemPriceCredit +
+										" Baht"
+									}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Cost | ต้นทุน"
+									secondary={
+										this.state.resultWide.product_cost + " Baht"
+									}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Profit | กำไร"
+									secondary={
+										this.state.resultWide.profit.toFixed(2) + " Baht"
+									}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Profit Ratio | กำไร ต่อ ยอดขาย"
+									secondary={
+										(
+											(this.state.resultWide.profit /
+												this.state.resultWide.itemPriceCredit) *
+											100
+										).toFixed(2) + "%"
+									}
+								/>
+							</ListItem>
+						</List>
+						<List className="col-12 col-md-4">
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Order Count | จำนวน Order"
+									secondary={
+										this.state.orderLength + " Orders"
+									}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Item Sold | จำนวนสินค้าขาย"
+									secondary={this.state.resultTransaction.length + " Items"}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Discount | ลดราคา"
+									secondary={
+										this.state.resultWide.promotionalFlexi.toFixed(
+											2
+										) + " Baht"
+									}
+								/>
+							</ListItem>
+							<Divider />
+							<ListItem alignItems="flex-start">
+								<ListItemText
+									primary="Top sell item | สินค้าขายมากสุด"
+									// secondary={`${this.state.financeVar.mostSold.itemId} ${this.state.financeVar.mostSold.count} Items`}
+									// secondary={
+									// 	<Link
+									// 		href={
+									// 			this.state.inventoryCount[0].product.product_detail_url
+									// 		}
+									// 		target="_blank"
+									// 		variant="body2"
+									// 	>
+									// 		{`${this.state.inventoryCount[0].product.name} ${this.state.inventoryCount[0].value} Items`}
+									// 	</Link>
+									// }
+								/>
+							</ListItem>
+						</List>
+					</div>
+				</div>
+				<Divider />
+
+				<LineChart resultData={this.state.resultTransactionArray} />
+			</div>
+		);
+	}
+}

@@ -7,19 +7,18 @@ import Main from './screen/Main';
 import Landing from './screen/Landing';
 import Auth from './screen/Auth';
 import Success from './screen/Success';
+import MainTransaction from './screen/MainTransaction';
 
 class App extends Component {
 
   render() {
-    if ( sessionStorage.getItem("accesstoken") && sessionStorage.getItem("userid") ) {
+    if ( sessionStorage.getItem("accesstoken") ) {
       return (
         <div className="App">
-                <Route path='/' exact component={Main}/> 
-                <Route path='/app' exact component={Main}/>
+                <Route path='/' exact component={MainTransaction}/> 
+                <Route path='/app' exact component={MainTransaction}/>
                 <Route path='/auth' exact component={Auth}/>
                 <Route path='/success' exact component={Success}/>
-                <Route path='/test' exact component={Success}/>
-                <Route path='/test2' exact component={Main}/>
         </div>
       );
     }
@@ -30,8 +29,6 @@ class App extends Component {
                 <Route path='/app' exact component={Auth}/>
                 <Route path='/auth' exact component={Auth}/>
                 <Route path='/success' exact component={Success}/>
-                <Route path='/test' exact component={Success}/>
-                <Route path='/test2' exact component={Main}/>
         </div>
       );
     }

@@ -19,9 +19,9 @@ export default class App extends React.Component {
     }
 
     authMe = () => {
-      let url = "https://manutzsong.github.io/lazada-static/#/success";
+      let url = "https://manutzsong-laz.ddns.net/#/success";
       url = encodeURIComponent(url);
-      window.location = `https://auth.lazada.com/oauth/authorize?response_type=code&redirect_uri=${url}&force_auth=true&client_id=113939`;
+      window.location = `https://auth.lazada.com/oauth/authorize?response_type=code&redirect_uri=${url}&force_auth=true&client_id=114729`;
       
     }
 

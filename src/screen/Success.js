@@ -151,7 +151,7 @@ export default class App extends React.Component {
       }).then( res => {
         console.log(res.data);
         // this.props.history.push('/app');
-        window.location.replace("https://manutzsong.github.io/lazada-static/");
+        window.location.replace("https://manutzsong-laz.ddns.net");
       });
       
     }
